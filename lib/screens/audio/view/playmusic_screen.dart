@@ -93,11 +93,12 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.forward_10_outlined,
-                    size: 30,
-                  )),
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.forward_10_outlined,
+                  size: 30,
+                ),
+              ),
               IconButton(
                 onPressed: () {
                   providerW!.assetsAudioPlayer.next();
@@ -105,7 +106,7 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
                   providerR!.changeButton();
                 },
                 icon: const Icon(
-                  Icons.skip_previous_outlined,
+                  Icons.skip_previous_rounded,
                   size: 30,
                 ),
               ),
@@ -141,11 +142,12 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
                 ),
               ),
               IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.forward_10_outlined,
-                    size: 30,
-                  )),
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.forward_10_outlined,
+                  size: 30,
+                ),
+              ),
             ],
           ),
           const Spacer(),
