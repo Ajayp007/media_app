@@ -2,7 +2,6 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:media_app/screens/video/videoprovider/video_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:video_player/video_player.dart';
 
 class PlayVideoScreen extends StatefulWidget {
   const PlayVideoScreen({super.key});

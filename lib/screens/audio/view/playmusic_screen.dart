@@ -14,6 +14,7 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<AudioProvider>().playButton = false;
     context.read<AudioProvider>().initChange();
     context.read<AudioProvider>().totalTime();
     context.read<AudioProvider>().shawLiveDuration();
@@ -33,17 +34,19 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
         title: Text("${providerW!.musicList[index].name}"),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            height: 300,
+            height: 420,
             margin: const EdgeInsets.all(30),
             width: MediaQuery.sizeOf(context).width * 0.9,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: Colors.black,
               image: DecorationImage(
-                  image: AssetImage("${providerW!.musicList[index].image}"),
+                  image: AssetImage(
+                    "${providerW!.musicList[index].image}",
+                  ),
                   fit: BoxFit.cover),
             ),
           ),
@@ -65,39 +68,48 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
               ],
             ),
           ),
-          const Spacer(),
-          Slider(
-            value: 1,
-            onChanged: (value) {},
-          ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 Text("${providerW!.liveDuration.inHours}:${providerW!.liveDuration.inMinutes}:${providerW!.liveDuration.inSeconds}"),
                 Text(
-                    "${providerW!.totalDuration.inHours}:${providerW!.totalDuration.inMinutes}:${providerW!.totalDuration.inSeconds}"),
+                    "${providerW!.liveDuration.inMinutes}:${providerW!.liveDuration.inSeconds}"),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.75,
+                  child: Slider(
+                    value: 1,
+                    onChanged: (value) {},
+                  ),
+                ),
+                Text("${providerW!.minute}:${providerW!.second}"),
               ],
             ),
+          ),
+          const SizedBox(
+            height: 30,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
-                  onPressed: () {
-
-                  },
-                  icon: const Icon(Icons.forward_10_outlined)),
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.forward_10_outlined,
+                    size: 30,
+                  )),
               IconButton(
                 onPressed: () {
-                  providerW!.assetsAudioPlayer.previous();
+                  providerW!.assetsAudioPlayer.next();
                   providerW!.playButton = false;
                   providerR!.changeButton();
                 },
-                icon: const Icon(Icons.skip_next_outlined),
+                icon: const Icon(
+                  Icons.skip_previous_outlined,
+                  size: 30,
+                ),
               ),
-              IconButton(
+              IconButton.filled(
                 onPressed: () {
                   if (providerW!.playButton) {
                     providerW!.assetsAudioPlayer.pause();
@@ -108,23 +120,60 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
                   }
                 },
                 icon: providerR!.playButton
-                    ? const Icon(Icons.pause_circle_outline)
-                    : const Icon(Icons.play_circle_outline),
+                    ? const Icon(
+                        Icons.pause_circle_outline,
+                        size: 40,
+                      )
+                    : const Icon(
+                        Icons.play_circle_outline,
+                        size: 40,
+                      ),
               ),
               IconButton(
                 onPressed: () {
-                  providerW!.assetsAudioPlayer.next();
+                  providerW!.assetsAudioPlayer.previous();
                   providerW!.playButton = false;
                   providerR!.changeButton();
                 },
-                icon: const Icon(Icons.skip_previous_outlined),
+                icon: const Icon(
+                  Icons.skip_next_rounded,
+                  size: 30,
+                ),
               ),
               IconButton(
                   onPressed: () {},
-                  icon: const Icon(Icons.forward_10_outlined)),
+                  icon: const Icon(
+                    Icons.forward_10_outlined,
+                    size: 30,
+                  )),
             ],
           ),
-          const SizedBox(height: 30),
+          const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const Icon(Icons.favorite_border_outlined),
+              const SizedBox(
+                width: 30,
+              ),
+              const Icon(Icons.delete_outline_outlined),
+              const SizedBox(
+                width: 30,
+              ),
+              const Icon(Icons.share),
+              const SizedBox(
+                width: 30,
+              ),
+              PopupMenuButton(
+                itemBuilder: (context) {
+                  return [];
+                },
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
         ],
       ),
     );

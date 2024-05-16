@@ -67,6 +67,28 @@ class AudioProvider with ChangeNotifier {
     );
   }
 
+  void currentTime() {
+    assetsAudioPlayer.current.listen(
+      (event) {
+       if(event != null)
+         {
+           totalDuration = event.audio.duration;
+           second = totalDuration.inSeconds;
+           if (second >= 60) {
+             minute = second ~/ 60;
+             second = second - (minute * 60);
+
+             if (minute >= 60) {
+               hour = minute ~/ 60;
+               minute = minute - (hour * 60);
+             }
+           }
+           notifyListeners();
+         }
+      },
+    );
+  }
+
   void shawLiveDuration() {
     assetsAudioPlayer.currentPosition.listen(
       (event) {
@@ -86,5 +108,6 @@ class AudioProvider with ChangeNotifier {
       showNotification: true,
       autoStart: false,
     );
+    currentTime();
   }
 }
