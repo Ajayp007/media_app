@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../home/provider/home_provider.dart';
+import '../audioprovider/audio_provider.dart';
 
 class PlayMusicScreen extends StatefulWidget {
   const PlayMusicScreen({super.key});
@@ -15,16 +14,18 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeProvider>().initChange();
+    context.read<AudioProvider>().initChange();
+    context.read<AudioProvider>().currentDuration();
+    context.read<AudioProvider>().shawLiveDuration();
   }
 
-  HomeProvider? providerR;
-  HomeProvider? providerW;
+  AudioProvider? providerR;
+  AudioProvider? providerW;
 
   @override
   Widget build(BuildContext context) {
-    providerR = context.read<HomeProvider>();
-    providerW = context.watch<HomeProvider>();
+    providerR = context.read<AudioProvider>();
+    providerW = context.watch<AudioProvider>();
 
     int index = ModalRoute.of(context)!.settings.arguments as int;
     return Scaffold(
@@ -65,15 +66,34 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
             ),
           ),
           const Spacer(),
-          const LinearProgressIndicator(
-            value: 0.5,
+          Slider(
+            value: 1,
+            onChanged: (value) {},
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                 Text("${providerW!.liveDuration.inHours}:${providerW!.liveDuration.inMinutes}:${providerW!.liveDuration.inSeconds}"),
+                Text(
+                    "${providerW!.totalDuration.inHours}:${providerW!.totalDuration.inMinutes}:${providerW!.totalDuration.inSeconds}"),
+              ],
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
+                  onPressed: () {
+
+                  },
+                  icon: const Icon(Icons.forward_10_outlined)),
+              IconButton(
                 onPressed: () {
                   providerW!.assetsAudioPlayer.previous();
+                  providerW!.playButton = false;
+                  providerR!.changeButton();
                 },
                 icon: const Icon(Icons.skip_next_outlined),
               ),
@@ -81,10 +101,10 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
                 onPressed: () {
                   if (providerW!.playButton) {
                     providerW!.assetsAudioPlayer.pause();
-                    providerR!.changeButton(false);
+                    providerR!.changeButton();
                   } else {
                     providerW!.assetsAudioPlayer.play();
-                    providerR!.changeButton(true);
+                    providerR!.changeButton();
                   }
                 },
                 icon: providerR!.playButton
@@ -94,9 +114,14 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
               IconButton(
                 onPressed: () {
                   providerW!.assetsAudioPlayer.next();
+                  providerW!.playButton = false;
+                  providerR!.changeButton();
                 },
                 icon: const Icon(Icons.skip_previous_outlined),
               ),
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.forward_10_outlined)),
             ],
           ),
           const SizedBox(height: 30),

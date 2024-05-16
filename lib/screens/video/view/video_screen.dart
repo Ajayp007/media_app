@@ -8,10 +8,15 @@ class VideoScreen extends StatefulWidget {
 }
 
 class _VideoScreenState extends State<VideoScreen> {
-
-
   @override
   Widget build(BuildContext context) {
-    return const Center();
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, 'playVideo');
+        },
+        child: const Text("Video"),
+      ),
+    );
   }
 }

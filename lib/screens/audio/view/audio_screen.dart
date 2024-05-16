@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:media_app/screens/home/provider/home_provider.dart';
+import 'package:media_app/screens/audio/audioprovider/audio_provider.dart';
 import 'package:provider/provider.dart';
 
 class AudioScreen extends StatefulWidget {
@@ -11,13 +11,13 @@ class AudioScreen extends StatefulWidget {
 }
 
 class _AudioScreenState extends State<AudioScreen> {
-  HomeProvider? providerR;
-  HomeProvider? providerW;
+  AudioProvider? providerR;
+  AudioProvider? providerW;
 
   @override
   Widget build(BuildContext context) {
-    providerR = context.read<HomeProvider>();
-    providerW = context.watch<HomeProvider>();
+    providerR = context.read<AudioProvider>();
+    providerW = context.watch<AudioProvider>();
     return Column(
       children: [
         CarouselSlider.builder(

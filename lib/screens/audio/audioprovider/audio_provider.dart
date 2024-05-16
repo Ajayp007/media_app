@@ -1,45 +1,47 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:media_app/screens/home/model/home_model.dart';
+import 'package:media_app/screens/audio/audiomodel/audio_model.dart';
 
-class HomeProvider with ChangeNotifier {
+class AudioProvider with ChangeNotifier {
   int indiIndex = 0;
   bool playButton = false;
   double indicator = 0.0;
   Duration totalDuration = const Duration(seconds: 0);
+  Duration liveDuration = const Duration(seconds: 0);
+  int hour = 0, minute = 0, second = 0;
 
-  List<HomeModel> musicList = [
-    HomeModel(
+  List<AudioModel> musicList = [
+    AudioModel(
         name: "Badass",
         image: "assets/song_img/leo.jpg",
         song:
             "https://pagalfree.com/musics/128-Badass - Leo (Hindi) 128 Kbps.mp3"),
-    HomeModel(
+    AudioModel(
         name: "Kesariya",
         image: "assets/song_img/brahmashtra.jpg",
         song:
             "https://pagalfree.com/musics/128-Kesariya - Brahmastra 128 Kbps.mp3"),
-    HomeModel(
+    AudioModel(
         name: "The Monster Song",
         image: "assets/song_img/kgf1.jpg",
         song:
             "https://pagalfree.com/musics/128-The Monster Song - KGF Chapter 2 128 Kbps.mp3"),
-    HomeModel(
+    AudioModel(
         name: "Galliyan Returns",
         image: "assets/song_img/ek villain.webp",
         song:
             "https://pagalfree.com/musics/128-Galliyan Returns - Ek Villain Returns 128 Kbps.mp3"),
-    HomeModel(
+    AudioModel(
         name: "Deva Shree Ganesha",
         image: "assets/song_img/agneepath.jpg",
         song:
             "https://pagalfree.com/musics/128-Deva Shree Ganesha - Agneepath 128 Kbps.mp3"),
-    HomeModel(
-        name: "Abrars Entry",
+    AudioModel(
+        name: "Abrars Entry Jamal Kudu",
         image: "assets/song_img/animal.jpg",
         song:
             "https://pagalfree.com/musics/128-Abrars Entry Jamal Kudu - Animal 128 Kbps.mp3"),
-    HomeModel(
+    AudioModel(
         name: "Mashallah - Ek Tha Tiger",
         image: "assets/song_img/ek tha tiger.jpg",
         song:
@@ -51,15 +53,45 @@ class HomeProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void changeButton(bool play) {
-    playButton =!playButton;
+  void changeButton() {
+    playButton = !playButton;
     notifyListeners();
+  }
+
+  void currentDuration() {
+    assetsAudioPlayer.current.listen(
+      (event) {
+        totalDuration = event!.audio.duration;
+
+        if (totalDuration.inSeconds >= 60) {
+          second = totalDuration.inSeconds;
+          minute = second ~/ 60;
+          second = second - (minute * 60);
+
+          if (minute >= 60) {
+            hour = minute ~/ 60;
+            minute = minute - (hour * 60);
+          }
+        }
+
+        notifyListeners();
+      },
+    );
+  }
+
+  void shawLiveDuration() {
+    assetsAudioPlayer.currentPosition.listen(
+      (event) {
+        liveDuration = event;
+        notifyListeners();
+      },
+    );
   }
 
   AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
 
-  initChange() {
-    assetsAudioPlayer.open(
+  Future<void> initChange() async {
+    await assetsAudioPlayer.open(
       Playlist(
           audios: musicList.map((e) => Audio.network(e.song!)).toList(),
           startIndex: indiIndex),

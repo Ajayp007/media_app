@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:media_app/screens/tab/audio_screen.dart';
-import 'package:media_app/screens/tab/video_screen.dart';
+import 'package:media_app/screens/audio/view/audio_screen.dart';
+import 'package:media_app/screens/video/view/video_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
