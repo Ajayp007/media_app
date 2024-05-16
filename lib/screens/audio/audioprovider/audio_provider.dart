@@ -58,22 +58,10 @@ class AudioProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void currentDuration() {
+  void totalTime() {
     assetsAudioPlayer.current.listen(
       (event) {
         totalDuration = event!.audio.duration;
-
-        if (totalDuration.inSeconds >= 60) {
-          second = totalDuration.inSeconds;
-          minute = second ~/ 60;
-          second = second - (minute * 60);
-
-          if (minute >= 60) {
-            hour = minute ~/ 60;
-            minute = minute - (hour * 60);
-          }
-        }
-
         notifyListeners();
       },
     );

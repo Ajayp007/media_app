@@ -15,7 +15,7 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
   void initState() {
     super.initState();
     context.read<AudioProvider>().initChange();
-    context.read<AudioProvider>().currentDuration();
+    context.read<AudioProvider>().totalTime();
     context.read<AudioProvider>().shawLiveDuration();
   }
 
