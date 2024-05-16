@@ -6,8 +6,8 @@ class AudioProvider with ChangeNotifier {
   int indiIndex = 0;
   bool playButton = false;
   double indicator = 0.0;
-  Duration totalDuration = const Duration(seconds: 0);
-  Duration liveDuration = const Duration(seconds: 0);
+  Duration totalDuration = const Duration();
+  Duration liveDuration = const Duration();
   int hour = 0, minute = 0, second = 0;
 
   List<AudioModel> musicList = [

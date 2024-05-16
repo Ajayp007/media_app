@@ -78,8 +78,11 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width * 0.75,
                   child: Slider(
-                    value: 1,
-                    onChanged: (value) {},
+                    value: providerW!.liveDuration.inSeconds.toDouble(),
+                    onChanged: (value) {
+                      providerW!.assetsAudioPlayer.seek(Duration(seconds: value.toInt()));
+                    },
+                    max: providerW!.totalDuration.inSeconds.toDouble(),
                   ),
                 ),
                 Text("${providerW!.minute}:${providerW!.second}"),
@@ -93,15 +96,18 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+
+                },
                 icon: const Icon(
-                  Icons.forward_10_outlined,
+                  Icons.shuffle,
                   size: 30,
                 ),
               ),
               IconButton(
                 onPressed: () {
-                  providerW!.assetsAudioPlayer.next();
+                  providerW!.assetsAudioPlayer.previous();
+
                   providerW!.playButton = false;
                   providerR!.changeButton();
                 },
@@ -132,7 +138,7 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
               ),
               IconButton(
                 onPressed: () {
-                  providerW!.assetsAudioPlayer.previous();
+                  providerW!.assetsAudioPlayer.next();
                   providerW!.playButton = false;
                   providerR!.changeButton();
                 },
@@ -144,7 +150,7 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
               IconButton(
                 onPressed: () {},
                 icon: const Icon(
-                  Icons.forward_10_outlined,
+                  Icons.loop,
                   size: 30,
                 ),
               ),
