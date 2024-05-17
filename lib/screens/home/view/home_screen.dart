@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:media_app/screens/audio/view/audio_screen.dart';
 import 'package:media_app/screens/video/view/video_screen.dart';
+
+import '../../music/view/music_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+
         appBar: AppBar(
           title: const Text("Media App"),
           centerTitle: true,

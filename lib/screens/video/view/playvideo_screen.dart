@@ -16,7 +16,6 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<VideoProvider>().initVideo();
   }
@@ -29,8 +28,13 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
       appBar: AppBar(
         title: const Text("Video"),
       ),
-      body: Chewie(
-        controller: providerW!.chewieController!,
+      body: Column(
+        children: [
+          SizedBox(
+            height: 200,
+            child: Chewie(controller: providerW!.chewieController!),
+          ),
+        ],
       ),
     );
   }

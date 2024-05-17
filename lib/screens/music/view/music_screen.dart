@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:media_app/screens/audio/audioprovider/audio_provider.dart';
+
 import 'package:provider/provider.dart';
+
+import '../musicprovider/music_provider.dart';
 
 class AudioScreen extends StatefulWidget {
   const AudioScreen({super.key});
@@ -11,13 +13,13 @@ class AudioScreen extends StatefulWidget {
 }
 
 class _AudioScreenState extends State<AudioScreen> {
-  AudioProvider? providerR;
-  AudioProvider? providerW;
+  MusicProvider? providerR;
+  MusicProvider? providerW;
 
   @override
   Widget build(BuildContext context) {
-    providerR = context.read<AudioProvider>();
-    providerW = context.watch<AudioProvider>();
+    providerR = context.read<MusicProvider>();
+    providerW = context.watch<MusicProvider>();
     return Column(
       children: [
         CarouselSlider.builder(
@@ -65,13 +67,13 @@ class _AudioScreenState extends State<AudioScreen> {
               return InkWell(
                 onTap: () {
                   providerR!.changeIndex(index);
-                  Navigator.pushNamed(context, 'playMusic',arguments: index);
+                  Navigator.pushNamed(context, 'playMusic', arguments: index);
                 },
                 child: Container(
                   height: 70,
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(

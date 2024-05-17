@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../audioprovider/audio_provider.dart';
+import '../musicprovider/music_provider.dart';
 
 class PlayMusicScreen extends StatefulWidget {
   const PlayMusicScreen({super.key});
@@ -14,19 +14,19 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<AudioProvider>().playButton = false;
-    context.read<AudioProvider>().initChange();
-    context.read<AudioProvider>().totalTime();
-    context.read<AudioProvider>().shawLiveDuration();
+    context.read<MusicProvider>().playButton = false;
+    context.read<MusicProvider>().initChange();
+    context.read<MusicProvider>().totalTime();
+    context.read<MusicProvider>().shawLiveDuration();
   }
 
-  AudioProvider? providerR;
-  AudioProvider? providerW;
+  MusicProvider? providerR;
+  MusicProvider? providerW;
 
   @override
   Widget build(BuildContext context) {
-    providerR = context.read<AudioProvider>();
-    providerW = context.watch<AudioProvider>();
+    providerR = context.read<MusicProvider>();
+    providerW = context.watch<MusicProvider>();
 
     int index = ModalRoute.of(context)!.settings.arguments as int;
     return Scaffold(
@@ -37,7 +37,7 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            height: 420,
+            height: 350,
             margin: const EdgeInsets.all(30),
             width: MediaQuery.sizeOf(context).width * 0.9,
             decoration: BoxDecoration(
@@ -80,7 +80,8 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
                   child: Slider(
                     value: providerW!.liveDuration.inSeconds.toDouble(),
                     onChanged: (value) {
-                      providerW!.assetsAudioPlayer.seek(Duration(seconds: value.toInt()));
+                      providerW!.assetsAudioPlayer
+                          .seek(Duration(seconds: value.toInt()));
                     },
                     max: providerW!.totalDuration.inSeconds.toDouble(),
                   ),
@@ -96,9 +97,7 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
-                onPressed: () {
-
-                },
+                onPressed: () {},
                 icon: const Icon(
                   Icons.shuffle,
                   size: 30,
@@ -156,7 +155,7 @@ class _PlayMusicScreenState extends State<PlayMusicScreen> {
               ),
             ],
           ),
-          const Spacer(),
+          Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

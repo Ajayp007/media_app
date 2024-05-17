@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:media_app/screens/audio/audioprovider/audio_provider.dart';
+import 'package:media_app/screens/music/musicprovider/music_provider.dart';
 import 'package:media_app/screens/video/videoprovider/video_provider.dart';
 import 'package:media_app/utils/routs.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +10,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: AudioProvider(),
+          value: MusicProvider(),
         ),
         ChangeNotifierProvider.value(
           value: VideoProvider(),
